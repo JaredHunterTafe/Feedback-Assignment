@@ -1,0 +1,236 @@
+ticket number (server generated) uuid?
+time and date (server generated) 
+rating (client input) drop down boxes or radio buttons
+    greeter
+    wait time
+    server
+    ease of completion
+    overall exp
+written feedback (client input) big text area
+contact details (client input) text input
+    name
+    email
+    contact phone
+
+add feedback > store/display feedback? > update feedback status
+
+submit feedback
+actor = cust
+
+process feedback
+actor = employee
+
+status open||closed
+
+get list/collection of cust FB objects where status is 
+open send req to server to close status to close. 
+then create new cust FB object processed which stores cust
+feedback uuid/employee name/timestamp
+
+
+
+// To-Do
+get feedback
+get staffmember
+add feedback
+add staffmember
+
+
+
+
+
+                {/* <form>
+                    <p>Please select your gender:</p>
+                    <input type="radio" id="male" name="gender" value="male"></input>
+                    <label for="male">Male</label><br />
+                    <input type="radio" id="female" name="gender" value="female"></input>
+                    <label for="female">Female</label><br />
+                    <input type="radio" id="other" name="gender" value="other"></input>
+                    <label for="other">Other</label>
+
+
+                    <p>Please select your age:</p>
+                    <input type="radio" id="age1" name="age" value="30"></input>
+                    <label for="age1">0 - 30</label><br />
+                    <input type="radio" id="age2" name="age" value="60"></input>
+                    <label for="age2">31 - 60</label><br />
+                    <input type="radio" id="age3" name="age" value="100"></input>
+                    <label for="age3">61 - 100</label><br /><br />
+                    <input type="submit" value="Submit"></input>
+                </form> */}
+
+                {/* <div className="radio">
+                    <label >
+                    <input type="radio" value="E-Toll" checked={true} onChange={(e) => setAccountType(e.target.value)} value={accountType} />
+                    etoll</label>
+                </div>
+                <div className="radio">
+                    <label >
+                    <input type="radio" value="Easy Toll Manual" />
+                    Easy manual</label>
+                </div>
+                <div className="radio">
+                    <label >
+                    <input type="radio" value="Easy Toll Auto" />
+                    etoll</label>
+                </div> */}
+
+                <p>WIP</p>
+                {/* <div className="radio">
+                    <label >
+                    <input type="radio" value="E-Toll" checked={true} onChange={(e) => setAccountType(e.target.value)} value={accountType} />
+                    etoll</label>
+                </div>
+                <div className="radio">
+                    <label >
+                    <input type="radio" value="Easy Toll Manual" />
+                    Easy manual</label>
+                </div>
+                <div className="radio">
+                    <label >
+                    <input type="radio" value="Easy Toll Auto" />
+                    etoll</label>
+                </div> */}
+                {/* <select onChange={(e) => setAccountType(e.target.value)} value={accountType}>
+                    <option value="E-Toll" >E-Toll</option>
+                    <option value="Easy Toll Manual" >Easy Toll Manual</option>
+                    <option value="Easy Toll Auto" >Easy Toll Auto</option>
+                </select>
+                <select onChange={(e) => setTopUpAmount(e.target.value)} value={topUpAmount}>
+                    <option value="40" >$40 top up</option>
+                    <option value="80" >$80 top up</option>
+                </select>
+
+                <div>Amount of Tags:
+                <select onChange={(e) => setTagAmount(e.target.value)} value={tagAmount}>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+
+                    </select>
+                </div> */}
+
+
+
+
+
+    server.post('/staff-members', async (request, response) => {
+        let addStaffMember = { employeeId: uuidv4() }
+        await storage.setItem(`feedback-${addStaffMember.employeeId}`, addStaffMember, ...request.body)
+        response.json(addStaffMember)
+    })// adds a staff member
+
+
+
+
+
+    // server.get('/staffmember/:id', async (request, response) => {
+    //     let staffmember = await storage.getItem(`staffmember-${request.params.id}`);
+    //     if (staffmember == undefined) {
+    //         response.json({ status: 400, message: "Incorrect staffmember Id Given" });
+    //     }else{
+    //         response.json(staffmember);
+    //     }
+    // })
+
+
+    
+    // server.post('/feedback', async (request, response) => {
+
+    //     let feedback = await storage.getItem(`feedback-${request.body.feedbackId}`);
+    //     if (feedback == undefined) {
+    //         response.json({ status: 400, message: "Incorrect feedbackId Given" });
+    //     }
+    //     else {
+    //         let feedback = {
+    //             feedbackId: uuidv4(),
+    //             time: new Date().toISOString().slice(0, 10),//figure this out
+    //             date: new Date().toISOString().slice(0, 10),//figure this out
+    //             rating
+
+    //             outcome: request.body.outcome,
+    //             feedbackId: feedback.id
+    //         };
+    //         await storage.setItem(`employeeId-${employeeId.id}`, staffmember);
+    //         response.json(staffmember)
+
+    //     }
+    // });
+
+const feedback = require('./data/feedbackData.json')
+const closed = require('./data/closedFeedback.json')
+const express = require('express')
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const server = express()
+const {v4:uuidv4} = require("uuid")
+
+const server = express()
+server.use(express.json())
+server.use(bodyParser.json())
+server.use(cors())
+
+const port = 4000
+
+
+
+const express = require('express'); 
+const cors = require('cors');
+const storage = require('node-persist'); 
+const {v4:uuidv4} = require('uuid'); 
+const bodyParser = require('body-parser');
+ 
+(async()=>{
+ 
+    await storage.init({dir:'./data'}); 
+ 
+    const server = express(); 
+    server.use(cors()); 
+    server.use(express.json()); 
+    server.use(bodyParser.json()); 
+ 
+    server.get('/courses',async(request,response)=>{
+        let courses = await storage.valuesWithKeyMatch(/course-/); 
+        response.json(courses)
+    }); 
+ 
+    server.post('/enrolments',async(request,response)=>{
+ 
+        let course = await storage.getItem(`course-${request.body.courseId}`); 
+        if(course == undefined){
+            response.json({status:400,message:"Invalid course Id provided"}); 
+        }
+        else{
+            let enrolment = {
+                id:uuidv4(),
+                forename:request.body.forename,
+                surname:request.body.surname,
+                courseId:course.id,
+                dateOfEnrolment: new Date().toISOString().slice(0,10)
+            }; 
+            await storage.setItem(`enrolment-${enrolment.id}`,enrolment); 
+            response.json(enrolment)
+ 
+        }     
+    });
+ 
+    server.get('/enrolments/:id',async(request,response)=>{
+        let enrolment = await storage.getItem(`enrolment-${request.params.id}`); 
+        if(enrolment == undefined){
+            response.json({status:400,message:"Invalid enrolment Id provided"}); 
+        }
+        else{
+            response.json(enrolment); 
+        }
+    }); 
+ 
+    server.get('/enrolments',async(request,response)=>{
+        let enrolments = await storage.valuesWithKeyMatch(/enrolment-/); 
+        response.json(enrolments);
+    });
+ 
+    server.listen(4000,()=>{
+        console.log("http://localhost:4000 is up and running, yay..."); 
+    })
+ 
+})();

@@ -1,0 +1,23 @@
+[
+    {
+        "timeStamp":"",
+        "rating" :{
+            "personGreeting":"",
+            "waitTime":"",
+            "serverRating":"",      
+            "easeOfCompletion":"",
+            "overallExperience":""      
+        },
+        "writtenFeedback":"",
+        "contact":{
+            "name":"",
+            "email":"",
+            "contactNumber":""
+        },
+        "followUpStatus":""
+
+    }
+]
+
+
+
